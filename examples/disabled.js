@@ -2,15 +2,13 @@
 
 import '../assets/index.less';
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import TimePicker from '..';
 
 const showSecond = true;
 const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
 
-const now = moment()
-  .hour(14)
-  .minute(30);
+const now = dayjs().hour(14).minute(30);
 
 function generateOptions(length, excludedOptions) {
   const arr = [];

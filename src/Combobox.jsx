@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from './Select';
+import dayjs from 'dayjs';
 
 const formatOption = (option, disabledOptions) => {
   let value = `${option}`;
@@ -28,41 +29,43 @@ class Combobox extends Component {
       isAM,
       onAmPmChange,
     } = this.props;
-    const value = (propValue || defaultOpenValue).clone();
+
+    // const value = (propValue || defaultOpenValue).clone();
+    let value = dayjs(propValue || defaultOpenValue);
 
     if (type === 'hour') {
       if (use12Hours) {
         if (isAM) {
-          value.hour(+itemValue % 12);
+          value = value.hour(+itemValue % 12);
         } else {
-          value.hour((+itemValue % 12) + 12);
+          value = value.hour((+itemValue % 12) + 12);
         }
       } else {
-        value.hour(+itemValue);
+        value = value.hour(+itemValue);
       }
     } else if (type === 'minute') {
-      value.minute(+itemValue);
+      value = value.minute(+itemValue);
     } else if (type === 'ampm') {
       const ampm = itemValue.toUpperCase();
       if (use12Hours) {
         if (ampm === 'PM' && value.hour() < 12) {
-          value.hour((value.hour() % 12) + 12);
+          value = value.hour((value.hour() % 12) + 12);
         }
 
         if (ampm === 'AM') {
           if (value.hour() >= 12) {
-            value.hour(value.hour() - 12);
+            value = value.hour(value.hour() - 12);
           }
         }
       }
       onAmPmChange(ampm);
     } else {
-      value.second(+itemValue);
+      value = value.second(+itemValue);
     }
     onChange(value);
   };
 
-  onEnterSelectPanel = range => {
+  onEnterSelectPanel = (range) => {
     const { onCurrentSelectPanelChange } = this.props;
     onCurrentSelectPanelChange(range);
   };
@@ -76,7 +79,7 @@ class Combobox extends Component {
     let hourOptionsAdj;
     let hourAdj;
     if (use12Hours) {
-      hourOptionsAdj = [12].concat(hourOptions.filter(h => h < 12 && h > 0));
+      hourOptionsAdj = [12].concat(hourOptions.filter((h) => h < 12 && h > 0));
       hourAdj = hour % 12 || 12;
     } else {
       hourOptionsAdj = hourOptions;
@@ -86,7 +89,7 @@ class Combobox extends Component {
     return (
       <Select
         prefixCls={prefixCls}
-        options={hourOptionsAdj.map(option => formatOption(option, disabledOptions))}
+        options={hourOptionsAdj.map((option) => formatOption(option, disabledOptions))}
         selectedIndex={hourOptionsAdj.indexOf(hourAdj)}
         type="hour"
         onSelect={this.onItemChange}
@@ -115,7 +118,7 @@ class Combobox extends Component {
     return (
       <Select
         prefixCls={prefixCls}
-        options={minuteOptions.map(option => formatOption(option, disabledOptions))}
+        options={minuteOptions.map((option) => formatOption(option, disabledOptions))}
         selectedIndex={minuteOptions.indexOf(minute)}
         type="minute"
         onSelect={this.onItemChange}
@@ -144,7 +147,7 @@ class Combobox extends Component {
     return (
       <Select
         prefixCls={prefixCls}
-        options={secondOptions.map(option => formatOption(option, disabledOptions))}
+        options={secondOptions.map((option) => formatOption(option, disabledOptions))}
         selectedIndex={secondOptions.indexOf(second)}
         type="second"
         onSelect={this.onItemChange}
@@ -161,8 +164,8 @@ class Combobox extends Component {
     }
 
     const AMPMOptions = ['am', 'pm'] // If format has A char, then we should uppercase AM/PM
-      .map(c => (format.match(/\sA/) ? c.toUpperCase() : c))
-      .map(c => ({ value: c }));
+      .map((c) => (format.match(/\sA/) ? c.toUpperCase() : c))
+      .map((c) => ({ value: c }));
 
     const selected = isAM ? 0 : 1;
 

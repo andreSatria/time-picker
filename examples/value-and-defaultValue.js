@@ -1,16 +1,16 @@
 /* eslint no-console:0 */
 import '../assets/index.less';
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import TimePicker from '..';
 
 class App extends React.Component {
   state = {
-    value: moment(),
+    value: dayjs(),
   };
 
-  handleValueChange = value => {
-    console.log(value && value.format('HH:mm:ss'));
+  handleValueChange = (value) => {
     this.setState({ value });
   };
 

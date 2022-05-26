@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 
 class Header extends Component {
@@ -47,7 +48,7 @@ class Header extends Component {
     }
   }
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     const str = event.target.value;
     this.setState({
       str,
@@ -66,17 +67,14 @@ class Header extends Component {
     if (str) {
       const { value: originalValue } = this.props;
       const value = this.getProtoValue().clone();
-      const parsed = moment(str, format, true);
+      const parsed = dayjs(str, format, true);
       if (!parsed.isValid()) {
         this.setState({
           invalid: true,
         });
         return;
       }
-      value
-        .hour(parsed.hour())
-        .minute(parsed.minute())
-        .second(parsed.second());
+      value.hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
       // if time value not allowed, response warning.
       if (
@@ -130,7 +128,7 @@ class Header extends Component {
     });
   };
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     const { onEsc, onKeyDown } = this.props;
     if (e.keyCode === 27) {
       onEsc();
@@ -151,7 +149,7 @@ class Header extends Component {
     return (
       <input
         className={classNames(`${prefixCls}-input`, invalidClass)}
-        ref={ref => {
+        ref={(ref) => {
           this.refInput = ref;
         }}
         onKeyDown={this.onKeyDown}

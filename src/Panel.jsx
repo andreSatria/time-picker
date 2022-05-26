@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 import Header from './Header';
 import Combobox from './Combobox';
@@ -26,7 +27,7 @@ function toNearestValidTime(time, hourOptions, minuteOptions, secondOptions) {
   const second = secondOptions
     .slice()
     .sort((a, b) => Math.abs(time.second() - a) - Math.abs(time.second() - b))[0];
-  return moment(`${hour}:${minute}:${second}`, 'HH:mm:ss');
+  return dayjs(`${hour}:${minute}:${second}`, 'HH:mm:ss');
 }
 
 class Panel extends Component {
@@ -36,7 +37,7 @@ class Panel extends Component {
     disabledHours: noop,
     disabledMinutes: noop,
     disabledSeconds: noop,
-    defaultOpenValue: moment(),
+    defaultOpenValue: dayjs(),
     use12Hours: false,
     addon: noop,
     onKeyDown: noop,
@@ -56,18 +57,18 @@ class Panel extends Component {
     return null;
   }
 
-  onChange = newValue => {
+  onChange = (newValue) => {
     const { onChange } = this.props;
     this.setState({ value: newValue });
     onChange(newValue);
   };
 
-  onAmPmChange = ampm => {
+  onAmPmChange = (ampm) => {
     const { onAmPmChange } = this.props;
     onAmPmChange(ampm);
   };
 
-  onCurrentSelectPanelChange = currentSelectPanel => {
+  onCurrentSelectPanelChange = (currentSelectPanel) => {
     this.setState({ currentSelectPanel });
   };
 
@@ -76,9 +77,9 @@ class Panel extends Component {
     let disabledOptions = disabledHours();
     if (use12Hours && Array.isArray(disabledOptions)) {
       if (this.isAM()) {
-        disabledOptions = disabledOptions.filter(h => h < 12).map(h => (h === 0 ? 12 : h));
+        disabledOptions = disabledOptions.filter((h) => h < 12).map((h) => (h === 0 ? 12 : h));
       } else {
-        disabledOptions = disabledOptions.map(h => (h === 12 ? 12 : h - 12));
+        disabledOptions = disabledOptions.map((h) => (h === 12 ? 12 : h - 12));
       }
     }
     return disabledOptions;

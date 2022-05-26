@@ -1,7 +1,8 @@
 /* eslint no-console:0 */
 import '../assets/index.less';
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import TimePicker from '..';
 
 const showSecond = true;
@@ -16,7 +17,7 @@ const App = () => (
     format={str}
     showSecond={showSecond}
     // use to control utfOffset, locale, default open value
-    defaultOpenValue={moment()}
+    defaultOpenValue={dayjs()}
     className="xxx"
     onChange={onChange}
     disabledHours={() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 22, 23]}

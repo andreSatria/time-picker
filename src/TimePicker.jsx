@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Trigger from 'rc-trigger';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 import Panel from './Panel';
 import placements from './placements';
@@ -23,7 +24,7 @@ class Picker extends Component {
     popupClassName: '',
     popupStyle: {},
     align: {},
-    defaultOpenValue: moment(),
+    defaultOpenValue: dayjs(),
     allowEmpty: true,
     showHour: true,
     showMinute: true,
@@ -72,22 +73,22 @@ class Picker extends Component {
       : null;
   }
 
-  onPanelChange = value => {
+  onPanelChange = (value) => {
     this.setValue(value);
   };
 
-  onAmPmChange = ampm => {
+  onAmPmChange = (ampm) => {
     const { onAmPmChange } = this.props;
     onAmPmChange(ampm);
   };
 
-  onClear = event => {
+  onClear = (event) => {
     event.stopPropagation();
     this.setValue(null);
     this.setOpen(false);
   };
 
-  onVisibleChange = open => {
+  onVisibleChange = (open) => {
     this.setOpen(open);
   };
 
@@ -96,7 +97,7 @@ class Picker extends Component {
     this.focus();
   };
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     if (e.keyCode === 40) {
       this.setOpen(true);
     }
@@ -120,14 +121,14 @@ class Picker extends Component {
 
     if (use12Hours) {
       const fmtString = [showHour ? 'h' : '', showMinute ? 'mm' : '', showSecond ? 'ss' : '']
-        .filter(item => !!item)
+        .filter((item) => !!item)
         .join(':');
 
       return fmtString.concat(' a');
     }
 
     return [showHour ? 'HH' : '', showMinute ? 'mm' : '', showSecond ? 'ss' : '']
-      .filter(item => !!item)
+      .filter((item) => !!item)
       .join(':');
   }
 
@@ -318,7 +319,7 @@ class Picker extends Component {
             autoComplete={autoComplete}
             onFocus={onFocus}
             onBlur={onBlur}
-            autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
+            autoFocus={autoFocus}
             onChange={noop}
             readOnly={!!inputReadOnly}
             id={id}
