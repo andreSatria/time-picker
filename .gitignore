@@ -1,5 +1,6 @@
 *.iml
 *.log
+.doc
 .idea/
 .ipr
 .iws
@@ -23,7 +24,6 @@ node_modules
 dist
 assets/**/*.css
 build
-lib
 coverage
 .vscode
 yarn.lock
