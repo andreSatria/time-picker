@@ -59,6 +59,6 @@
     "lint": "eslint src/ examples/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
     "coverage": "father test --coverage",
-    "install": "npm run build"
+    "now-build": "npm run build"
   }
 }
